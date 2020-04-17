@@ -28,6 +28,13 @@ public class PriortyQueue<T> where T : IComparable<T>
         }
     }
 
+    public int Count
+    {
+        get
+        {
+            return _items.Count;
+        }
+    }
     /// <summary>
     /// Constructor that will convert an existing list into a min heap
     /// </summary>

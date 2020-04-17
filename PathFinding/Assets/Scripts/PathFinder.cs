@@ -49,7 +49,7 @@ public class PathFinder
         //What below actually does is just make the end point the starting point
         //Need to find a way to get it to be whatever tile the mouse hovers over
         //Once that happens we can say if the tile in the queue equals the end tile
-        //Then it might workd?
+        //Then it might work?
 
         //So we need to also have the ending tile location?
         var endMapLocation = map.GetTile(end);
@@ -64,13 +64,12 @@ public class PathFinder
 
             //pop item off priority queue
             TilePath newPath = pathQueue.Dequeue();
-
+           
             //if item contains the final tile in the path, you are done
-            if(newPath.Contains(endTile))
+            if(newPath.GetMostRecentTile().Position == end)
             {
                 discoveredPath = newPath;
                 found = true;
-                //break;
             }
             else
             {
@@ -87,7 +86,7 @@ public class PathFinder
                     anotherPath.AddTileToPath(neighborTiles[i]);
 
                     //if that path contains the final tile, done
-                    if(anotherPath.Contains(endTile))
+                    if(anotherPath.GetMostRecentTile().Position == end)
                     {
                         discoveredPath = anotherPath;
                         found = true;
@@ -108,7 +107,11 @@ public class PathFinder
 
             //This line ensures that we don't get an infinite loop in Unity.
             //You will need to remove it in order for your pathfinding algorithm to work.
-            found = true;
+            //found = true;
+            //if(pathQueue.Count >10000)
+            //{
+            //    break;
+            //}
         }
         return discoveredPath;
     }
@@ -118,33 +121,50 @@ public class PathFinder
         List<Tile> neighbor = new List<Tile>();
 
         TileBase above = map.GetTile(new Vector3Int(tile.Position.x, tile.Position.y + 1, tile.Position.z));
-        Tile aboveTile = tileFactory.GetTile(above.name);
-
+        if(above != null)
+        {
+            Tile aboveTile = tileFactory.GetTile(above.name);
+            aboveTile.Position = new Vector3Int(tile.Position.x, tile.Position.y + 1, tile.Position.z);
+            if (aboveTile != null)
+            {
+                neighbor.Add(new Tile(aboveTile));
+            }
+        }
+       
         TileBase below = map.GetTile(new Vector3Int(tile.Position.x, tile.Position.y - 1, tile.Position.z));
-        Tile belowTile = tileFactory.GetTile(below.name);
+        if (below != null)
+        {
+            Tile belowTile = tileFactory.GetTile(below.name);
+            belowTile.Position = new Vector3Int(tile.Position.x, tile.Position.y - 1, tile.Position.z);
+            if (belowTile != null)
+            {
+                neighbor.Add(new Tile(belowTile));
+            }
+        }
 
         TileBase right = map.GetTile(new Vector3Int(tile.Position.x + 1, tile.Position.y, tile.Position.z));
-        Tile rightTile = tileFactory.GetTile(right.name);
+        if (right != null)
+        {
+            Tile rightTile = tileFactory.GetTile(right.name);
+            rightTile.Position = new Vector3Int(tile.Position.x + 1, tile.Position.y, tile.Position.z);
+            if (rightTile != null)
+            {
+                neighbor.Add(new Tile(rightTile));
+            }
+        }
+       
 
         TileBase left = map.GetTile(new Vector3Int(tile.Position.x - 1, tile.Position.y, tile.Position.z));
-        Tile leftTile = tileFactory.GetTile(left.name);
+        if (left != null)
+        {
+            Tile leftTile = tileFactory.GetTile(left.name);
+            leftTile.Position = new Vector3Int(tile.Position.x - 1, tile.Position.y, tile.Position.z);
+            if (leftTile != null)
+            {
+                neighbor.Add(new Tile(leftTile));
+            }
+        }
 
-        if (aboveTile != null)
-        {
-            neighbor.Add(aboveTile);
-        }
-        if (rightTile != null)
-        {
-            neighbor.Add(rightTile);
-        }
-        if (leftTile != null)
-        {
-            neighbor.Add(leftTile);
-        }
-        if (belowTile != null)
-        {
-            neighbor.Add(belowTile);
-        }
 
         return neighbor;
     }
