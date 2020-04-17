@@ -18,6 +18,11 @@ public class TileFactory
             Name = "Road",
             Weight = 2
         });
+        _tiles.Add("OutdoorsGround_29", new Tile()
+        {
+            Name = "Puddle",
+            Weight = 20
+        }) ;
         _tiles.Add("Generic", new Tile()
         {
             Name = "Unknown",
