@@ -20,3 +20,7 @@ is starting to drive me forward.
 So, class today really helped! I was able to ask a lot of questions and work on the code and the input from Adam was very helpful.
 We got it to run before the end of class. I am working on the lag because it is making to many paths that eventually cause it to
 unity to freeze if it goes to far. 
+**Update**
+I added little puddles to the pathfinder, this was ridiculously easy compared to actually writing the code. I am still working on 
+fixing the lag. It mainly freezes when I keep it running to long, most likeyly from the many paths it generates. I am still working
+on getting the dictionary to work.
