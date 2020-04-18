@@ -46,17 +46,7 @@ public class PathFinder
         pathQueue.Enqueue(discoveredPath);
         bool found = false;
 
-        //What below actually does is just make the end point the starting point
-        //Need to find a way to get it to be whatever tile the mouse hovers over
-        //Once that happens we can say if the tile in the queue equals the end tile
-        //Then it might work?
-
-        //So we need to also have the ending tile location?
-        var endMapLocation = map.GetTile(end);
-        //now convert tile to model that tracks cost
-        var endTile = tileFactory.GetTile(endMapLocation.name);
-        endTile.Position = end;
-
+        int count = -1;
 
         while(found == false && pathQueue.IsEmpty() == false)
         {
@@ -64,9 +54,10 @@ public class PathFinder
 
             //pop item off priority queue
             TilePath newPath = pathQueue.Dequeue();
-           
+            //Tile nextTile = newPath.GetMostRecentTile();
+
             //if item contains the final tile in the path, you are done
-            if(newPath.GetMostRecentTile().Position == end)
+            if (newPath.GetMostRecentTile().Position == end)
             {
                 discoveredPath = newPath;
                 found = true;
@@ -74,9 +65,9 @@ public class PathFinder
             else
             {
                 Tile nextTile = newPath.GetMostRecentTile();
+                //discoveredTiles.Add(new Vector3Int(nextTile.Position.x, nextTile.Position.y, nextTile.Position.z), tileFactory.GetTile(nextTile.name));
                 List<Tile> neighborTiles = findNeighbors(map, nextTile, tileFactory);
                 //the findneighbors helper funciton only gets the above, the other three are the same
-                //tile
 
                 //for each of the neighbors(4 since using squares)
                 for (int i = 0; i < neighborTiles.Count; i++)
@@ -85,8 +76,24 @@ public class PathFinder
                     TilePath anotherPath = new TilePath(newPath);
                     anotherPath.AddTileToPath(neighborTiles[i]);
 
+                    //for(int j = 0; j < discoveredTiles.Count; j++)
+                    //{
+                    //    if(neighborTiles[i].Position != discoveredTiles[j] && anotherPath.GetMostRecentTile().Position != end)
+                    //    {
+                    //        pathQueue.Enqueue(anotherPath);
+                    //    }
+                    //    else
+                    //    {
+                    //        discoveredPath = anotherPath;
+                    //        found = true;
+                    //        break;
+                    //    }
+
+                    //}
+
+
                     //if that path contains the final tile, done
-                    if(anotherPath.GetMostRecentTile().Position == end)
+                    if (anotherPath.GetMostRecentTile().Position == end)
                     {
                         discoveredPath = anotherPath;
                         found = true;
