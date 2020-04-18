@@ -15,3 +15,8 @@ into the main code.
 I am having a problem with the end tile, or more specifically making the endtile whatever tile the mouse hovers over. I am going to either 
 figure it out tonight or have to ask tomorrow. I am definietly in a more productive state of mind. Mainly because the desire to not fail
 is starting to drive me forward.
+
+04/17//2020
+So, class today really helped! I was able to ask a lot of questions and work on the code and the input from Adam was very helpful.
+We got it to run before the end of class. I am working on the lag because it is making to many paths that eventually cause it to
+unity to freeze if it goes to far. 
